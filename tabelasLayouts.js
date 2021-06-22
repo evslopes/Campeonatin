@@ -6,6 +6,11 @@ function limpar($el) {
 
 (() => {
 
+    let $tituloAT = document.createElement('h1');
+    $tituloAT.innerText = 'Campeonatin'
+    $tituloAT.className = 'text-center mb-5'
+    document.getElementById('app').appendChild($tituloAT)
+
     let times = [
         {nome: 'Flamengo', pontos: 0, vitorias: 0, empates: 0, derrotas: 0},
         {nome: 'Fluminense', pontos: 0, vitorias: 0, empates: 0, derrotas: 0},
@@ -13,11 +18,16 @@ function limpar($el) {
         {nome: 'Botafogo', pontos: 0, vitorias: 0, empates: 0, derrotas: 0},
     ]
 
-    // Criando o Layout da tabela Classificação
-    const $tabelaClassificacao = document.createElement('table')
-    $tabelaClassificacao.className = 'table table-bordered table-responsive'
+    let $tituloClassificacao = document.createElement('h2');
+    $tituloClassificacao.innerText = 'Classificação'
+    $tituloClassificacao.className = 'border text-center'
+    document.getElementById('app').appendChild($tituloClassificacao)
 
-    const $tituloTabelaClassificacao = $tabelaClassificacao.createTHead().insertRow()
+    // Criando o Layout da tabela Classificação
+    let $tabelaClassificacao = document.createElement('table')
+    $tabelaClassificacao.className = 'table table-bordered table-responsive text-center'
+
+    let $tituloTabelaClassificacao = $tabelaClassificacao.createTHead().insertRow()
     $tituloTabelaClassificacao.insertCell(-1).innerText = 'time'
     $tituloTabelaClassificacao.insertCell(-1).innerText = 'pontos'
     $tituloTabelaClassificacao.insertCell(-1).innerText = 'vitorias'
@@ -56,20 +66,25 @@ function limpar($el) {
 
     // Criando Layout da tabela de Partidas
 
+    let $tituloPartidas = document.createElement('h2');
+    $tituloPartidas.innerText = 'Partidas'
+    $tituloPartidas.className = 'border text-center'
+    document.getElementById('app').appendChild($tituloPartidas)
+
     let partidas = [
         {casa: times[0].nome, vitoria: false, empate: false, derrotaDaCasa: false, visitante: times[1].nome},
-        {casa: times[0].nome, vitoria: false, empate: false, derrotaDaCasa: false, visitante: times[2].nome},
         {casa: times[2].nome, vitoria: false, empate: false, derrotaDaCasa: false, visitante: times[3].nome},
+        {casa: times[0].nome, vitoria: false, empate: false, derrotaDaCasa: false, visitante: times[2].nome},
         {casa: times[1].nome, vitoria: false, empate: false, derrotaDaCasa: false, visitante: times[3].nome},
         {casa: times[0].nome, vitoria: false, empate: false, derrotaDaCasa: false, visitante: times[3].nome},
         {casa: times[1].nome, vitoria: false, empate: false, derrotaDaCasa: false, visitante: times[2].nome},
     ]
 
     // Criando o Layout da tabela Classificação
-    const $tabelaPartidas = document.createElement('table')
-    $tabelaPartidas.className = 'table table-bordered table-responsive'
+    let $tabelaPartidas = document.createElement('table')
+    $tabelaPartidas.className = 'table table-bordered table-responsive text-center'
 
-    const $tituloTabelaPartidas = $tabelaPartidas.createTHead().insertRow()
+    let $tituloTabelaPartidas = $tabelaPartidas.createTHead().insertRow()
     $tituloTabelaPartidas.insertCell(-1).innerText = 'time casa'
     $tituloTabelaPartidas.insertCell(-1).innerText = 'vitoria da casa'
     $tituloTabelaPartidas.insertCell(-1).innerText = 'empate da casa'
@@ -101,47 +116,47 @@ function limpar($el) {
 
 
             // Verificando vitória
-            if (partida.$vitoria === true) {
+            if (partida.vitoria === true) {
                 $vitoria.className = 'table-success'
                 $empate.className = 'table-light'
                 $derrotaDaCasa.className = 'table-light'
-            } else if (partida.$vitoria === false) {
+            } else if (partida.vitoria === false) {
                 $vitoria.className = 'table-light'
             }
 
             // Verificando empate
-            if (partida.$empate === true) {
+            if (partida.empate === true) {
                 $empate.className = 'table-warning'
                 $vitoria.className = 'table-light'
                 $derrotaDaCasa.className = 'table-light'
-            } else if (partida.$empate === false) {
+            } else if (partida.empate === false) {
                 $empate.className = 'table-light'
             }
 
             // Verificando derrotaDacasa
-            if (partida.$derrotaDaCasa === true) {
+            if (partida.derrotaDaCasa === true) {
                 $derrotaDaCasa.className = 'table-danger'
                 $vitoria.className = 'table-light'
                 $empate.className = 'table-light'
-            } else if (partida.$derrotaDaCasa === false) {
+            } else if (partida.derrotaDaCasa === false) {
                 $derrotaDaCasa.className = 'table-light'
             }
 
             // endrender
 
             $vitoria.onclick = (e) => {
-                partida.$vitoria = !partida.$vitoria
+                partida.vitoria = !partida.vitoria
                 criarTabelaPartidas($corpoPartidas, partidas)
 
             }
 
             $empate.onclick = (e) => {
-                partida.$empate = !partida.$empate
+                partida.empate = !partida.empate
                 criarTabelaPartidas($corpoPartidas, partidas)
             }
 
             $derrotaDaCasa.onclick = (e) => {
-                partida.$derrotaDaCasa = !partida.$derrotaDaCasa
+                partida.derrotaDaCasa = !partida.derrotaDaCasa
                 criarTabelaPartidas($corpoPartidas, partidas)
             }
 
