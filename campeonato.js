@@ -23,16 +23,19 @@ class Partida {
     }
 
     pontuar() {
+
         if (this.vitoria === true) {
             this.casa.pontos += 3
             this.casa.vitorias += 1
             this.visitante.derrotas += 1
+
         } else if (this.derrotaDaCasa === true) {
             this.visitante.pontos += 3
             this.visitante.vitorias += 1
             this.casa.derrotas += 1
-        } else {
-            this.visitante.pontos += 1
+
+        } else if (this.empate === true){
+            this.casa.pontos += 1
             this.visitante.pontos += 1
             this.casa.empates += 1
             this.visitante.empates += 1
@@ -79,9 +82,16 @@ class Campeonato {
 
     classificar() {
         this.times.sort((a, b) => {
-            if (a.pontos !== b.pontos) {
+            if(a.pontos !== b.pontos){
                 return b.pontos - a.pontos
             }
+            if(a.vitorias !== b.vitorias){
+                return b.vitorias - a.vitorias
+            }
+            if(a.empates !== b.empates){
+                return b.golsSaldo() - a.golsSaldo()
+            }
+            return a.derrotas - b.derrotas
         })
     }
 }
@@ -91,8 +101,6 @@ class Campeonato {
 })()
 
     function obterTodosTimes() {
-    // iria em um banco de dados
-    // retornaria todos os times
     return [
         new Time('Flamengo'),
         new Time('Fluminense'),
@@ -101,9 +109,18 @@ class Campeonato {
     ]
  }
 
-function limpar($el) {
+function limparTela($el) {
     while ($el.firstChild) {
         $el.firstChild.remove()
+    }
+}
+
+function limparTimes(Times){
+    for (let time of Times) {
+        this.pontos = 0
+        this.vitorias = 0
+        this.derrotas = 0
+        this.empates = 0
     }
 }
 
@@ -118,7 +135,6 @@ function limpar($el) {
 
     campeonato.sortearPartidas()
     let partidas = campeonato.partidas
-    // exibier a tabela de classificacao
 
     let $tituloAT = document.createElement('h1');
     $tituloAT.innerText = 'Campeonatin'
@@ -144,7 +160,8 @@ function limpar($el) {
     let $corpoClassificacao = $tabelaClassificacao.createTBody()
 
     function criarTabelaClassificacao($corpoClassificacao, times) {
-        limpar($corpoClassificacao)
+        limparTela($corpoClassificacao)
+        limparTimes(times)
         for (let time of times) {
             // region RENDER
             let $linha = $corpoClassificacao.insertRow()
@@ -192,7 +209,8 @@ function limpar($el) {
     let $corpoPartidas = $tabelaPartidas.createTBody()
     console.log(partidas)
     function criarTabelaPartidas($corpoPartidas, partidas) {
-        limpar($corpoPartidas)
+        limparTela($corpoPartidas)
+        limparTimes(times)
         for (let partida of partidas) {
             // region RENDER
             let $linhaPartidas = $corpoPartidas.insertRow()
