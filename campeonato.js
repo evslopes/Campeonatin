@@ -83,7 +83,7 @@
         }
 
         classificar() {
-            this.times.sort((a, b) => {
+            times.sort((a, b) => {
                 if(a.pontos !== b.pontos){
                     return b.pontos - a.pontos
                 }
@@ -109,10 +109,10 @@
 
     function limparTimes(Times){
         for (let time of Times) {
-            this.pontos = 0
-            this.vitorias = 0
-            this.derrotas = 0
-            this.empates = 0
+            time.pontos = 0
+            time.vitorias = 0
+            time.derrotas = 0
+            time.empates = 0
         }
     }
 
@@ -195,10 +195,10 @@
                 $derrotaDaCasa.className = 'table-light'
             }
 
+
             // monitorando os eventos das partidas
             // Verificando vitória
             $vitoria.onclick = (e) => {
-                limparTimes(campeonato.times)
                 partida.vitoria = !partida.vitoria
                 partida.empate = false
                 partida.derrotaDaCasa = false
@@ -206,12 +206,10 @@
                 campeonato.classificar()
                 criarTabelaClassificacao($corpoClassificacao, times)
                 criarTabelaPartidas($corpoPartidas, partidas)
-
             }
 
             // Verificando empate
             $empate.onclick = (e) => {
-                limparTimes(campeonato.times)
                 partida.empate = !partida.empate
                 partida.vitoria = false
                 partida.derrotaDaCasa = false
@@ -223,7 +221,6 @@
 
             // Verificando derrotaDacasa
             $derrotaDaCasa.onclick = (e) => {
-                limparTimes(campeonato.times)
                 partida.derrotaDaCasa = !partida.derrotaDaCasa
                 partida.vitoria = false
                 partida.empate = false
@@ -236,13 +233,14 @@
         }
 
         // verificando dados no console
+        limparTimes(times)
         console.log('DEGUB TIMES')
         console.table(times)
-        console.log('DEGUB CAMPEONATO.TIMES')
-        console.table(campeonato.times)
         console.log('DEGUB PARTIDAS')
         console.table(partidas)
+
     }
+
 
     //instancia o campeonato e adiciona os times e as partidas
     let campeonato = new Campeonato('Campeonatin')
@@ -302,5 +300,6 @@
     let $corpoPartidas = $tabelaPartidas.createTBody()
     criarTabelaPartidas($corpoPartidas, partidas)
     document.getElementById('app').appendChild($tabelaPartidas)
+
 
 })()
